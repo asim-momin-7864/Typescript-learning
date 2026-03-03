@@ -8,7 +8,7 @@ function loginUser(user) {
         isActive: user.isActive,
     };
 }
-var newUser3 = {
+let newUser3 = {
     username: "hashira",
     password: 1234,
     isActive: true,
@@ -19,3 +19,4 @@ loginUser(newUser3);
 loginUser({ username: "shinobi", password: 1234, isActive: true });
 //[3]
 loginUser({ username: "asim", password: 1234, isActive: false });
+//# sourceMappingURL=04.aliases.js.map
