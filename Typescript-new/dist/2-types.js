@@ -14,4 +14,4 @@ let username = "Luffy";
 username = "hamda";
 let score = 4;
 let isLogin = true;
-//# sourceMappingURL=types.js.map
+//# sourceMappingURL=2-types.js.map

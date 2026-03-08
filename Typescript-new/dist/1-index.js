@@ -6,4 +6,4 @@ function greet(person) {
 }
 const username = "hero hamada";
 console.log(greet(username));
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=1-index.js.map
