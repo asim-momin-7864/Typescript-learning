@@ -1,4 +1,4 @@
-//* Interface
+//* Interface and "type" keyword
 
 // use of "type" and "interface"
 // where "type" brokes code - classes
