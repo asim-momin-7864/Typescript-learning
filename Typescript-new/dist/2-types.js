@@ -1,6 +1,4 @@
-"use strict";
 //* Type inferencing
-Object.defineProperty(exports, "__esModule", { value: true });
 let drink = "chai";
 // drink = 44
 //! Type 'number' is not assignable to type 'string'.
@@ -14,4 +12,5 @@ let username = "Luffy";
 username = "hamda";
 let score = 4;
 let isLogin = true;
+export {};
 //# sourceMappingURL=2-types.js.map

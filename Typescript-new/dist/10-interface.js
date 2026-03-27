@@ -1,6 +1,4 @@
-"use strict";
 //* Interfaces keyword in deatiled
-Object.defineProperty(exports, "__esModule", { value: true });
 const MasalaChai = {
     flavour: "Masala Chai",
     price: 450,
@@ -32,4 +30,5 @@ const Book = {
     a: "English Literature",
     b: "Williams Shakespear",
 };
+export {};
 //# sourceMappingURL=10-interface.js.map

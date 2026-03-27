@@ -1,6 +1,4 @@
-"use strict";
 //* Array, Tuple, Enum
-Object.defineProperty(exports, "__esModule", { value: true });
 //* Array Decalring : Method 1
 const chaiFlavours = ["Tea Powder", "Sugar", "Water"];
 const orderQuantity = [1, 2, 3, 2, 4, 2];
@@ -117,6 +115,7 @@ var weather;
 //* Tuple problem - extra value push
 let T = ["Hero_Hamada", 450];
 T.push("Luffy");
+export {};
 // according to Tuple nature it should not accept extra value
 // but it is accepting extra value beacuse , at the end it is Array
 //# sourceMappingURL=9-array-enum.js.map

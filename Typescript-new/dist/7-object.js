@@ -1,6 +1,4 @@
-"use strict";
 //* Object in tsc
-Object.defineProperty(exports, "__esModule", { value: true });
 // Basic rule use const to declare object
 const chai = {
     name: "Masala Chai",
@@ -82,5 +80,6 @@ const tomotoSoup = {
     isHot: true,
     spice: "Tomato",
 };
+export {};
 //-----------------------------------------------------------
 //# sourceMappingURL=7-object.js.map

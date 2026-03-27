@@ -1,6 +1,4 @@
-"use strict";
 //* RECOMMEDED PRACTICES
-Object.defineProperty(exports, "__esModule", { value: true });
 //* Type Narrowing
 function getOrder(order) {
     if (typeof order === "string") {
@@ -136,4 +134,5 @@ function isStringArray(arr) {
     // Check if every item in the array is a string
     return arr.every((item) => typeof item === "string");
 }
+export {};
 //# sourceMappingURL=4-typeNarrowing.js.map

@@ -1,6 +1,4 @@
-"use strict";
 //* Functions
-Object.defineProperty(exports, "__esModule", { value: true });
 //* type for parameters
 function chai(order, quantity) {
     // some processing
@@ -62,4 +60,5 @@ function createChai(recepi) {
     // chai is ready
     return true;
 }
+export {};
 //# sourceMappingURL=8-functions.js.map

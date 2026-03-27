@@ -1,6 +1,4 @@
-"use strict";
 //* Union
-Object.defineProperty(exports, "__esModule", { value: true });
 // can declare mutiple types
 let subs = 1000;
 subs = "1M";
@@ -31,6 +29,7 @@ for (const order of orders) {
     currentOrder = "111";
 }
 console.log(currentOrder);
+export {};
 //? SHOWING:  let currentOrder: string | undefined
 //! CONFUSION:  undefined it is showing -->  we need to handle "else" case also
 //# sourceMappingURL=3-union-any.js.map

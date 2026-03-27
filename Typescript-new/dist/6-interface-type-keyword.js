@@ -1,6 +1,4 @@
-"use strict";
 //* Interface and "type" keyword
-Object.defineProperty(exports, "__esModule", { value: true });
 // use of "type" and "interface"
 // where "type" brokes code - classes
 // where we use "interface" insted of "type"
@@ -51,6 +49,7 @@ const cfg = {
     appName: "MasterJi", // it is readonly but we need to set it once
     version: 1.126
 };
+export {};
 //! ERROR: Cannot assign to 'appName' because it is a read-only property.
 // now we cannot set it again
 // cfg.appName = "ChaiCode";

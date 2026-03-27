@@ -1,7 +1,5 @@
-"use strict";
 //* Forceful Type Assertion
 // this is not types conversion
-Object.defineProperty(exports, "__esModule", { value: true });
 let response = "42";
 // let numericLength: number = response.length
 //! sometimes it does not recoginize its type and support
@@ -89,4 +87,5 @@ function redirectBaseOnRole(role) {
 function neverReturn() {
     while (true) { }
 }
+export {};
 //# sourceMappingURL=5-more-types.js.map
