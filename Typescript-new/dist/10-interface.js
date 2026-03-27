@@ -13,7 +13,7 @@ const machine = {
     },
     stop() {
         console.log(` Stop machine `);
-    }
+    },
 };
 const ratings = {
     MasalaTea: 4.5,
@@ -28,7 +28,6 @@ const U1 = {
     //! ERROR: Property 'age' is missing in type '{ name: string; }' but required in type 'User'.
     age: 34,
 };
-;
 const Book = {
     a: "English Literature",
     b: "Williams Shakespear",

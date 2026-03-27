@@ -1,25 +1,21 @@
-
-//* RECOMMEDED PRACTICES 
+//* RECOMMEDED PRACTICES
 
 //* Type Narrowing
 
 function getOrder(order: string | number) {
+  if (typeof order === "string") {
+    //* here your order variable, system detect its string so it treat as it string and show string methods
 
-   if (typeof order === 'string') {
+    //  `Your order is ${order.toLocaleString()} ...`;
+    //  `Your order is ${order.toLowerCase()} ...`;
+    return `Your order is ${order} ...`;
+  }
 
-      //* here your order variable, system detect its string so it treat as it string and show string methods 
+  //* here it knows its number so treat as it.
 
-      //  `Your order is ${order.toLocaleString()} ...`;
-      //  `Your order is ${order.toLowerCase()} ...`;
-      return `Your order is ${order} ...`;
-
-   }
-
-   //* here it knows its number so treat as it.
-
-   //   ` your order quantity is ${order.toFixed()}`
-   //   ` your order quantity is ${order.toPrecision()}`
-   return ` your order quantity is ${order}`
+  //   ` your order quantity is ${order.toFixed()}`
+  //   ` your order quantity is ${order.toPrecision()}`
+  return ` your order quantity is ${order}`;
 }
 
 //------------------------------------------------------------
@@ -28,13 +24,12 @@ function getOrder(order: string | number) {
 
 // we use ? - if we are not sure about we get argument or not
 function serveOrder(msg?: string) {
+  // type narrowing
+  if (msg) {
+    return ` server message is ${msg}`;
+  }
 
-   // type narrowing
-   if (msg) {
-      return ` server message is ${msg}`;
-   }
-
-   return ` not get msg, so follow default message  `;
+  return ` not get msg, so follow default message  `;
 }
 
 //---------------------------------------------------------------------
@@ -42,16 +37,15 @@ function serveOrder(msg?: string) {
 //* Exostive checks
 
 function orderQuantity(size: "small" | "medium" | "large" | number) {
+  if (size === "large") {
+    return ` serve large`;
+  }
 
-   if (size === "large") {
-      return ` serve large`
-   };
+  if (size === "small" || size === "medium") {
+    return ` serve in medium cup`;
+  }
 
-   if (size === "small" || size === "medium") {
-      return ` serve in medium cup`
-   }
-
-   return ` server chai in quanty = ${size} `
+  return ` server chai in quanty = ${size} `;
 }
 
 //-----------------------------------------------
@@ -62,34 +56,29 @@ function orderQuantity(size: "small" | "medium" | "large" | number) {
 
 // classes
 class googlePay {
-
-   payment() {
-      return `pay with google pay`
-   }
+  payment() {
+    return `pay with google pay`;
+  }
 }
 
 class applePay {
-
-   payment() {
-      return `pay with apple pay`
-   }
+  payment() {
+    return `pay with apple pay`;
+  }
 }
 
 // we have multiple classes and have same name methods
-// to call surely method from a specific class we can do checking like this 
+// to call surely method from a specific class we can do checking like this
 
 function payment(payMethod: googlePay | applePay) {
+  // guard rails checking
+  if (payMethod instanceof googlePay) {
+    payMethod.payment();
+  }
 
-   // guard rails checking
-   if (payMethod instanceof googlePay) {
-      payMethod.payment();
-   };
-
-   if (payMethod instanceof applePay) {
-      payMethod.payment();
-   };
-
-
+  if (payMethod instanceof applePay) {
+    payMethod.payment();
+  }
 }
 
 //-------------------------------------------------
@@ -98,9 +87,9 @@ function payment(payMethod: googlePay | applePay) {
 // we can make own types also
 
 type payMode = {
-   type: string,
-   upiCode: number
-}
+  type: string;
+  upiCode: number;
+};
 
 //* CREATE isCheck function
 //so, WE ARE SURE ABOUT RETURN VALUE
@@ -108,53 +97,48 @@ type payMode = {
 // we dont know about incoming object : any
 // but the object we return its type is confirmed : payMode
 function isPayMode(obj: any): obj is payMode {
-
-   // more checking to make sure about it
-   return (
-      typeof obj === "object" &&
-      obj !== null &&
-      typeof obj.type == "string" &&
-      typeof obj.upiCode == "number"
-   )
+  // more checking to make sure about it
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    typeof obj.type == "string" &&
+    typeof obj.upiCode == "number"
+  );
 }
 
 function shopping(pay: payMode | string) {
+  if (isPayMode(pay)) {
+    // we surelly direct access its properties beacuse this pass through strict checking: isPayMode
+    return ` Payment ID is: ${pay.upiCode}, Mode: ${pay.type} `;
+  }
 
-   if (isPayMode(pay)) {
-
-      // we surelly direct access its properties beacuse this pass through strict checking: isPayMode
-      return ` Payment ID is: ${pay.upiCode}, Mode: ${pay.type} `
-   }
-
-   // else case
-   return ` Payment is from custome string mode`
+  // else case
+  return ` Payment is from custome string mode`;
 }
 
 //--------------------------------------------
 
-//* VERY BETTER TYPE-SAFETY CODE 
+//* VERY BETTER TYPE-SAFETY CODE
 
 //* we can add custome field named type with custome value as type
 
 // this "type" is keyword
 type tshirt = {
-
-   // this "type" is field we use to define name for our custome type
-   type: "tshirt",
-   price: 1220,
+  // this "type" is field we use to define name for our custome type
+  type: "tshirt";
+  price: 1220;
 };
 
 type shirt = {
-   type: "shirt",
-   price: 1440,
+  type: "shirt";
+  price: 1440;
 };
 
 type jeans = {
-   type: "jeans",
-   length: "40cm"
-   price: 800,
+  type: "jeans";
+  length: "40cm";
+  price: 800;
 };
-
 
 //*  1 - we declare individual custome type (also add name for it)
 
@@ -162,41 +146,39 @@ type jeans = {
 
 //? function buyCloths(item: tshirt | shirt | jeans ) {}
 
-// BUT, what if there are 10 types 
+// BUT, what if there are 10 types
 // so to reduce it - and make more cleaner code
-//* 2 -  we declare a type which can be have  
+//* 2 -  we declare a type which can be have
 
 // assiging custome types to our item / variable - means what types our cloth variable should have
 type cloths = tshirt | shirt | jeans;
 
 //* more clearner version
 function name(item: cloths) {
-   switch (item.type) {
-      case "tshirt":
-         return `buy tshirt`;
+  switch (item.type) {
+    case "tshirt":
+      return `buy tshirt`;
 
-      case "shirt":
-         return `buy shirt`;
+    case "shirt":
+      return `buy shirt`;
 
-      case "jeans":
-         return `buy jeans`;
+    case "jeans":
+      return `buy jeans`;
 
-      default:
-         break;
-   }
+    default:
+      break;
+  }
 }
 
 // one more function - example
 function cutPantLength(item: cloths) {
+  // checking length field - it only exsist in jeans
+  if ("length" in item) {
+    return ` Yes, length of jeans is customizable`;
+  }
 
-   // checking length field - it only exsist in jeans
-   if ("length" in item) {
-      return ` Yes, length of jeans is customizable`
-   };
-
-   return ` this is item is not a jeans, so no lenght is customizable`;
+  return ` this is item is not a jeans, so no lenght is customizable`;
 }
-
 
 //------------------------------------------------------
 
@@ -232,11 +214,11 @@ Because you are returning ['hi', 'hello'] (an array) instead of true or false, T
 */
 
 function isStringArray(arr: unknown): arr is string[] {
-   // Check if it's an array
-   if (!Array.isArray(arr)) {
-      return false;
-   }
+  // Check if it's an array
+  if (!Array.isArray(arr)) {
+    return false;
+  }
 
-   // Check if every item in the array is a string
-   return arr.every(item => typeof item === 'string');
+  // Check if every item in the array is a string
+  return arr.every((item) => typeof item === "string");
 }

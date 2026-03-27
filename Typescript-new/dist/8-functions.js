@@ -54,9 +54,9 @@ function coffeeMaker(quantity = " 500 ml ") {
     console.log(` quantity for coffee is : ${quantity} `);
 }
 //-----------------------
-// * Complex 
-// Recommended Practice is we pre-declare type 
-// "type" 
+// * Complex
+// Recommended Practice is we pre-declare type
+// "type"
 function createChai(recepi) {
     // some operations
     // chai is ready

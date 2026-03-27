@@ -1,10 +1,10 @@
 "use strict";
-//* RECOMMEDED PRACTICES 
+//* RECOMMEDED PRACTICES
 Object.defineProperty(exports, "__esModule", { value: true });
 //* Type Narrowing
 function getOrder(order) {
-    if (typeof order === 'string') {
-        //* here your order variable, system detect its string so it treat as it string and show string methods 
+    if (typeof order === "string") {
+        //* here your order variable, system detect its string so it treat as it string and show string methods
         //  `Your order is ${order.toLocaleString()} ...`;
         //  `Your order is ${order.toLowerCase()} ...`;
         return `Your order is ${order} ...`;
@@ -30,7 +30,6 @@ function orderQuantity(size) {
     if (size === "large") {
         return ` serve large`;
     }
-    ;
     if (size === "small" || size === "medium") {
         return ` serve in medium cup`;
     }
@@ -52,17 +51,15 @@ class applePay {
     }
 }
 // we have multiple classes and have same name methods
-// to call surely method from a specific class we can do checking like this 
+// to call surely method from a specific class we can do checking like this
 function payment(payMethod) {
     // guard rails checking
     if (payMethod instanceof googlePay) {
         payMethod.payment();
     }
-    ;
     if (payMethod instanceof applePay) {
         payMethod.payment();
     }
-    ;
 }
 //* CREATE isCheck function
 //so, WE ARE SURE ABOUT RETURN VALUE
@@ -102,7 +99,6 @@ function cutPantLength(item) {
     if ("length" in item) {
         return ` Yes, length of jeans is customizable`;
     }
-    ;
     return ` this is item is not a jeans, so no lenght is customizable`;
 }
 //------------------------------------------------------
@@ -138,6 +134,6 @@ function isStringArray(arr) {
         return false;
     }
     // Check if every item in the array is a string
-    return arr.every(item => typeof item === 'string');
+    return arr.every((item) => typeof item === "string");
 }
 //# sourceMappingURL=4-typeNarrowing.js.map

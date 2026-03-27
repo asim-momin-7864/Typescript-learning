@@ -25,18 +25,18 @@ let tea;
 tea = {
     name: "Khullad chai",
     price: 340,
-    isHot: true
+    isHot: true,
 };
 const venilla = {
     name: "Vanilla Double Cherry Ice Cream",
     flavour: "Vanilla",
     isCold: false,
-    ingrediants: ["ice", "milk", "biscuits", "vanilla essencs"]
+    ingrediants: ["ice", "milk", "biscuits", "vanilla essencs"],
 };
 let smallCup = { size: "200ml" };
 let bigCup = {
     size: "400ml",
-    material: "steel" // extra field
+    material: "steel", // extra field
 };
 // assign value to Cup types var
 smallCup = bigCup;
@@ -71,7 +71,7 @@ Argument of type '{ name: string; price: number; }' is not assignable to paramet
 placeOrders({
     name: "chicken curry",
     price: 200,
-    isHot: false
+    isHot: false,
 });
 const whiteCurry = {
     name: "White Curry",

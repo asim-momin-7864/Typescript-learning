@@ -4,18 +4,18 @@
 let response: any = "42";
 
 // let numericLength: number = response.length
-//! sometimes it does not recoginize its type and support 
+//! sometimes it does not recoginize its type and support
 
 //* We have to do forceful type assertion
-let numericLength: number = (response as string).length
+let numericLength: number = (response as string).length;
 
 //------------------------------------------------------------------
 
-//* Example - data come from localstorage, .env 
+//* Example - data come from localstorage, .env
 
 type Book = {
-    name: string
-}
+  name: string;
+};
 
 let bookstring = '{ "name": "who move my cheez" }';
 
@@ -24,12 +24,11 @@ let bookObject = JSON.parse(bookstring) as Book;
 
 console.log(bookObject);
 
-
 //--------------------------------------------------------------
 
 //* DOM elements types
 
-const inputElements = document.getElementById("username") as HTMLInputElement
+const inputElements = document.getElementById("username") as HTMLInputElement;
 
 //----------------------------------------------------------------
 
@@ -37,13 +36,13 @@ const inputElements = document.getElementById("username") as HTMLInputElement
 
 //* any
 
-let val1: any
+let val1: any;
 
-val1 = "chai"
-val1 = [12, 34, 55]
-val1 = 56.78
+val1 = "chai";
+val1 = [12, 34, 55];
+val1 = 56.78;
 
-// when we try to apply differnt type of methods 
+// when we try to apply differnt type of methods
 // here val1 contain number ,
 //! it is not showing any error when we apply .toUpperCase()
 // that error we get in execution
@@ -54,21 +53,20 @@ val1 = 56.78
 
 //* unkown
 
-let val2: unknown
+let val2: unknown;
 
-val2 = "king"
-val2 = [1, 4, 5]
+val2 = "king";
+val2 = [1, 4, 5];
 val2 = 25.34;
 
 // val2.toUpperCase()
 //! ERROR: 'val2' is of type 'unknown'.
-// it show error - because we are changing its values and types - which is not acceptable 
-//* add check - to handle different types get it 
+// it show error - because we are changing its values and types - which is not acceptable
+//* add check - to handle different types get it
 
 if (typeof val2 == "string") {
-    val2.toUpperCase();
+  val2.toUpperCase();
 }
-
 
 //---------------------------------------------------------------
 
@@ -76,26 +74,20 @@ if (typeof val2 == "string") {
 
 //! Bad Practice to Handle Errors
 try {
-
 } catch (error: any) {
-    console.log(error.message);
-
+  console.log(error.message);
 }
 
 //* Recommended way to Handle Error
 
 try {
-
 } catch (error) {
+  // add type guards
+  if (error instanceof Error) {
+    console.log(error.message);
+  }
 
-    // add type guards
-    if (error instanceof Error) {
-        console.log(error.message);
-
-    }
-
-    console.log("Error", error);
-
+  console.log("Error", error);
 }
 
 //-------------------------------------------------------
@@ -103,44 +95,42 @@ try {
 // EXAMPLE: handling unknow data from API
 // it automatically not recoginize , so we have to forcefully asset type
 
-const data: unknown = "100rs is total expense of user"
+const data: unknown = "100rs is total expense of user";
 const strData: string = data as string;
 
 //---------------------------------------------------------------
 
 //* Never type
-// use of it 
+// use of it
 
 // type Role = "admin" | "user"
-type Role = "admin" | "user" | "superadmin"
+type Role = "admin" | "user" | "superadmin";
 
 // void means not retruning any thing or dont care
 function redirectBaseOnRole(role: Role): void {
+  // type narrowing
+  if (role == "admin") {
+    console.log(` Redirect to admin dashboard `);
+    return;
+  }
 
-    // type narrowing
-    if (role == "admin") {
-        console.log(` Redirect to admin dashboard `);
-        return
-    }
+  if (role == "user") {
+    console.log(` Redirect to user dashboard `);
+    return;
+  }
 
-    if (role == "user") {
-        console.log(` Redirect to user dashboard `);
-        return
-    }
+  // when we handle all type cases
+  // and want to check is anything left from - even it written in different Dir, Folder, File
 
+  // we write this syntax at end
+  role; //* --> (parameter) role: never
 
-    // when we handle all type cases
-    // and want to check is anything left from - even it written in different Dir, Folder, File
+  //  CASE:  type Role = "admin" | "user"
+  // if handle all types - we have only 2 --> then it must show never
 
-    // we write this syntax at end
-    role; //* --> (parameter) role: never
-
-    //  CASE:  type Role = "admin" | "user"
-    // if handle all types - we have only 2 --> then it must show never
-
-    // CASE: type Role = "admin" | "user" | "superadmin"
-    // it will show remaining type case
-    //---> (parameter) role: "superadmin"
+  // CASE: type Role = "admin" | "user" | "superadmin"
+  // it will show remaining type case
+  //---> (parameter) role: "superadmin"
 }
 
 //-------------------------------------------------------------
@@ -149,7 +139,5 @@ function redirectBaseOnRole(role: Role): void {
 // e.g. web servers - continously run
 
 function neverReturn(): never {
- 
-    while (true) {}
-    
+  while (true) {}
 }

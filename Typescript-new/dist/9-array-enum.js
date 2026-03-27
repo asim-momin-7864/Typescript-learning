@@ -1,7 +1,7 @@
 "use strict";
 //* Array, Tuple, Enum
 Object.defineProperty(exports, "__esModule", { value: true });
-//* Array Decalring : Method 1 
+//* Array Decalring : Method 1
 const chaiFlavours = ["Tea Powder", "Sugar", "Water"];
 const orderQuantity = [1, 2, 3, 2, 4, 2];
 //* Array Decalring : Method 2
@@ -21,16 +21,11 @@ const teasArray = [
         name: "Khullad",
         size: 4,
         country: "Arabica",
-    }
+    },
 ];
 //-------------------------------------------
 //* readonly
-const citites = [
-    "Pune",
-    "Jaipure",
-    "Dehli",
-    "Bombay"
-];
+const citites = ["Pune", "Jaipure", "Dehli", "Bombay"];
 // no updates possible
 // citites.push("London")
 //! Property 'push' does not exist on type 'readonly string[]'.
@@ -55,7 +50,7 @@ trainTuple = [" Rajdhani Express A/C ", 5660];
 //-----------------------------------------------------------------
 //* readonly tuple
 const location = [22.45, 56.44];
-//! ERROR: Cannot assign to '0' because it is a read-only property. 
+//! ERROR: Cannot assign to '0' because it is a read-only property.
 // location[0] = 78.88;
 //------------------------------------------------------------------
 //* Named Tuple
@@ -81,7 +76,7 @@ var BiryaniPlate;
     BiryaniPlate[BiryaniPlate["MEDIUM"] = 102] = "MEDIUM";
     BiryaniPlate[BiryaniPlate["MEDIUMHALF"] = 103] = "MEDIUMHALF";
     BiryaniPlate[BiryaniPlate["LARGE"] = 104] = "LARGE";
-    BiryaniPlate[BiryaniPlate["EXTRALARGE"] = 105] = "EXTRALARGE"; // 105 ..
+    BiryaniPlate[BiryaniPlate["EXTRALARGE"] = 105] = "EXTRALARGE";
 })(BiryaniPlate || (BiryaniPlate = {}));
 //------------------------------------------------
 //* Values for Items
@@ -97,7 +92,7 @@ function seatBooking(seat) {
 }
 seatBooking(SeatType.AC);
 // seatBooking("Non A/C Seat")
-//! Using enum means , other direct value on enum item is also not acceptable, 
+//! Using enum means , other direct value on enum item is also not acceptable,
 // only values can pass through enum
 //--------------------------------------------
 // Multi-data type items enum
@@ -111,7 +106,7 @@ var User;
 //-------------------------------------
 //* const enum
 // so we cannot change it later
-// but in normal use also we keep enums consts / not update even without using const keyword 
+// but in normal use also we keep enums consts / not update even without using const keyword
 var weather;
 (function (weather) {
     weather["HOT"] = "summer";

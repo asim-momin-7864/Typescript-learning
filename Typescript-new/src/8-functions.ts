@@ -2,10 +2,8 @@
 
 //* type for parameters
 function chai(order: string, quantity: number) {
-
-    // some processing
-    console.log(` order is ${order} and quantity is ${quantity} `);
-
+  // some processing
+  console.log(` order is ${order} and quantity is ${quantity} `);
 }
 
 chai("Ginger Chai", 5);
@@ -14,12 +12,10 @@ chai("Ginger Chai", 5);
 
 //* function return value type
 function makeChai(size: string): number {
+  // some processing
+  // if (size === "200ml") {
 
-    // some processing
-    // if (size === "200ml") {
-
-
-    return 5;
+  return 5;
 }
 
 makeChai("500ml");
@@ -43,18 +39,15 @@ makeChai("500ml");
 
 // }
 
-
 function addSugar(quantity: string) {
+  // returning null
+  if (!quantity) {
+    return null;
+  }
 
-    // returning null
-    if (!quantity) {
-        return null;
-    }
-
-    // some processing
-    // return boolean
-    return true;
-
+  // some processing
+  // return boolean
+  return true;
 }
 
 //----------------------------------
@@ -63,8 +56,7 @@ function addSugar(quantity: string) {
 // functions not returning any value .e.g logger functions
 
 function loggerMe(): void {
-    console.log(` 500 request call to server `);
-
+  console.log(` 500 request call to server `);
 }
 
 //------------------------------------------------
@@ -73,34 +65,29 @@ function loggerMe(): void {
 // parameteres maybe provided or not provided
 
 function coffeeOrder(quantity?: string) {
-
-    // some processing
+  // some processing
 }
 
 //----------------------------------
 //* Predeclared value
 
 function coffeeMaker(quantity: string = " 500 ml ") {
-    console.log(` quantity for coffee is : ${quantity} `);
-
+  console.log(` quantity for coffee is : ${quantity} `);
 }
 
 //-----------------------
 
-// * Complex 
-// Recommended Practice is we pre-declare type 
-// "type" 
+// * Complex
+// Recommended Practice is we pre-declare type
+// "type"
 
-function createChai(
-    recepi: {
-        name: string;
-        sugar_Qnt: number;
-        size: "small" | "medium";
-    }
-): boolean {
+function createChai(recepi: {
+  name: string;
+  sugar_Qnt: number;
+  size: "small" | "medium";
+}): boolean {
+  // some operations
+  // chai is ready
 
-    // some operations
-    // chai is ready
-
-    return true;
+  return true;
 }

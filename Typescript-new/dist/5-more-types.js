@@ -4,7 +4,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 let response = "42";
 // let numericLength: number = response.length
-//! sometimes it does not recoginize its type and support 
+//! sometimes it does not recoginize its type and support
 //* We have to do forceful type assertion
 let numericLength = response.length;
 let bookstring = '{ "name": "who move my cheez" }';
@@ -21,7 +21,7 @@ let val1;
 val1 = "chai";
 val1 = [12, 34, 55];
 val1 = 56.78;
-// when we try to apply differnt type of methods 
+// when we try to apply differnt type of methods
 // here val1 contain number ,
 //! it is not showing any error when we apply .toUpperCase()
 // that error we get in execution
@@ -34,8 +34,8 @@ val2 = [1, 4, 5];
 val2 = 25.34;
 // val2.toUpperCase()
 //! ERROR: 'val2' is of type 'unknown'.
-// it show error - because we are changing its values and types - which is not acceptable 
-//* add check - to handle different types get it 
+// it show error - because we are changing its values and types - which is not acceptable
+//* add check - to handle different types get it
 if (typeof val2 == "string") {
     val2.toUpperCase();
 }

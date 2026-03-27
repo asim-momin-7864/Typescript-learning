@@ -11,7 +11,7 @@ let apiResponseStatus = "pending";
 apiResponseStatus = "success";
 console.log(apiResponseStatus);
 //-----------------------------------------
-const orders = ['12', '44', '332', '54', '11'];
+const orders = ["12", "44", "332", "54", "11"];
 //! let currentOrder; --> bad practice
 //? SHOWING: let currentOrder: any
 // any we can explain like "i do0nt care which dataype you assign"
@@ -19,11 +19,11 @@ let currentOrder;
 // let currentOrder: string ;
 // IMP case
 //! ERROR: Variable 'currentOrder' is used before being assigned.
-//*  we anote type undefined for case :  
-// if currentOrder not get through for loop then it get undefined value 
-// so, it should be prepare for that case type --> undefined 
+//*  we anote type undefined for case :
+// if currentOrder not get through for loop then it get undefined value
+// so, it should be prepare for that case type --> undefined
 for (const order of orders) {
-    if (order === '44') {
+    if (order === "44") {
         currentOrder = order;
         break;
     }
@@ -32,5 +32,5 @@ for (const order of orders) {
 }
 console.log(currentOrder);
 //? SHOWING:  let currentOrder: string | undefined
-//! CONFUSION:  undefined it is showing -->  we need to handle "else" case also  
+//! CONFUSION:  undefined it is showing -->  we need to handle "else" case also
 //# sourceMappingURL=3-union-any.js.map
