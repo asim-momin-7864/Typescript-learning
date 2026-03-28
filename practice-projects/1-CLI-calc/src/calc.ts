@@ -73,7 +73,7 @@ function calculator(value1: number, value2: number, operation: MathOp): void {
 // Function to run CLI
 
 async function runCLI() {
-  console.log(` Welcom! To Type-Safe Calculator \n `);
+  console.log(` Welcome! To Type-Safe Calculator \n `);
 
   // first value1
   const firstInput = await input({

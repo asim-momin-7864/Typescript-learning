@@ -58,7 +58,7 @@ function calculator(value1, value2, operation) {
 // calculator(5, 6, MathOp.ADD);
 // Function to run CLI
 async function runCLI() {
-    console.log(` Welcom! To Type-Safe Calculator \n `);
+    console.log(` Welcome! To Type-Safe Calculator \n `);
     // first value1
     const firstInput = await input({
         message: "Enter the first number:",
