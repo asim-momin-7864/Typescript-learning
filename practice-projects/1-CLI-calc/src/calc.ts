@@ -1,5 +1,11 @@
 //* CLI Type Safe Calculator
 
+import dist = require("@inquirer/prompts");
+import console = require("node:console");
+
+import { input, select } from "@inquirer/prompts";
+import test = require("node:test");
+
 // Operations Enum
 const enum MathOp {
   ADD,
@@ -62,4 +68,71 @@ function calculator(value1: number, value2: number, operation: MathOp): void {
   }
 }
 
-calculator(5, 6, MathOp.ADD);
+// calculator(5, 6, MathOp.ADD);
+
+// Function to run CLI
+
+async function runCLI() {
+  console.log(` Welcom! To Type-Safe Calculator \n `);
+
+  // first value1
+  const firstInput = await input({
+    message: "Enter the first number:",
+    validate: (value) => {
+      // our validation logic
+      // if value is NaN
+      if (isNaN(Number(value)) || value.trim() === "") {
+        return ` Please enter  valid number! `;
+      }
+
+      // if everything okey then send true to accept value
+      return true;
+    },
+  });
+
+  // store
+  const num1: number = Number(firstInput);
+
+  //------------------------------------------------------------
+
+  // second value 2
+  const secondInput = await input({
+    message: "Enter th second number",
+    validate: (value) => {
+      if (isNaN(Number(value)) || value.trim() === "") {
+        return ` Please enter valid number `;
+      }
+
+      return true;
+    },
+  });
+
+  // store
+  const num2: number = Number(secondInput);
+
+  //------------------------------------------------------------
+
+  // select operations enum
+
+  const selectedOperation = await select({
+    message: "Select an operation to perform:",
+    choices: [
+      // 'name' is what the user sees. 'value' is the Enum passed to your code
+      { name: "Addition", value: MathOp.ADD },
+      { name: "Subtract", value: MathOp.SUBSTRACT },
+      { name: "Multiply", value: MathOp.MULTIPY },
+      { name: "Divide", value: MathOp.DIVIDE },
+    ],
+  });
+
+  // insert values and invoke main function
+  console.log("\n--------------RESULT--------------------\n");
+
+  // invoke main function
+  calculator(num1, num2, selectedOperation);
+
+  console.log("\n---------------------------------------------\n");
+}
+
+// run CLI
+runCLI();

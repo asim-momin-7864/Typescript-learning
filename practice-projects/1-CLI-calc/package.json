@@ -9,9 +9,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
     "@types/node": "^25.5.0",
     "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.3.2"
   }
 }
