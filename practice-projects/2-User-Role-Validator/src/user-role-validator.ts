@@ -231,6 +231,8 @@ type AppUser = Viewer | Editor | Admin;
 
 Then use it like this:
 function canEditDocumentValidator(user: AppUser): void { ... }
+
+
 2. Checking for Dates
 In your type guard, you checked the date using typeof data.loginTime !== "object". You are 100% correct that dates are technically objects in JavaScript! However, an array is also an object. To be extra strict in the future, you can check if something is a date by using instanceof:
 
@@ -239,6 +241,7 @@ Fails if it is not specifically a Date object
 if (!(data.loginTime instanceof Date)) { 
     return false; 
 }
+
 3. Using unknown instead of any
 In function isAdminType(data: any), try changing any to unknown. unknown is the safer version of any. It forces you to do exactly what you just did (checking typeof, checking Object.hasOwn) before it lets you use the data.
 
