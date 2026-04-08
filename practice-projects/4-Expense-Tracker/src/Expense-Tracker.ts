@@ -3,7 +3,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 //Catgeory Enum
-enum Categories {
+export enum Categories {
   FOOD = "Food",
   TRANSPORT = "Transport",
   UTILITIES = "Utilities",
@@ -42,9 +42,9 @@ function isExpense(data: any): data is Expense {
 
     //--------------------------
 
-    //! Manully checking 
-    // If you ever add a new category, 
-    // you'll have to update this long string of checks. 
+    //! Manully checking
+    // If you ever add a new category,
+    // you'll have to update this long string of checks.
     // Instead, you can let JavaScript dynamically check the Enum for you:
 
     // (data.category === "Food" ||
@@ -54,7 +54,6 @@ function isExpense(data: any): data is Expense {
     //   data.category === "Other")
 
     Object.values(Categories).includes(data.category)
-
   );
 }
 
@@ -89,21 +88,20 @@ function addExpense(
 function viewTotalExpenseByCategory(
   category: Categories,
   minAmt: number,
-): void {
+): void | number {
   // verify
   if (
-    minAmt === 0 ||
+    minAmt < 0 ||
     typeof minAmt === "number" ||
     category.trim() === "" ||
-    category === Categories.FOOD ||
-    category === Categories.ENTERTAINMENT ||
-    category === Categories.OTHER ||
-    category === Categories.TRANSPORT ||
-    category === Categories.UTILITIES
+    (category !== Categories.FOOD &&
+      category !== Categories.ENTERTAINMENT &&
+      category !== Categories.OTHER &&
+      category !== Categories.TRANSPORT &&
+      category !== Categories.UTILITIES)
   ) {
-
     console.log(` Invalid Input `);
-    return
+    return;
   }
 
   //* Maybe we not need sorter func here
@@ -118,7 +116,7 @@ function viewTotalExpenseByCategory(
   // case handling
   if (customeFilteredExpensesArray.length === 0) {
     console.log(`\nYou do not have Expense in "${category}" category\n`);
-    return;
+    return 0;
   }
 
   //  calculate total
@@ -135,6 +133,8 @@ function viewTotalExpenseByCategory(
     \nCategory: ${category}
     \nTotal: ${totalInCategory}
     `);
+
+  return totalInCategory;
 }
 
 //---------------------------------------------------------------------
@@ -240,7 +240,6 @@ interface SummaryByCategories {
 }
 
 function summaryEachCategory(): SummaryByCategories {
-
   //* why use reduce and how it works
 
   // we can use reduce to sort and filter , summarize data and return also if sorting is multiple and complex type of , like multiple properties check and multiple properties have
@@ -259,39 +258,57 @@ function summaryEachCategory(): SummaryByCategories {
     }
 
     // inserting curr expense record into expenses array [ ] field
-    acc[curr.category].expenses.push(curr);
+    acc[curr.category]!.expenses.push(curr);
 
     // calculating total for each category and stroing into total field
-    acc[curr.category].total += curr.amount;
+    acc[curr.category]!.total += curr.amount;
+
+    /*
+
+The Problem: 
+TypeScript is being overly cautious. 
+It thinks acc[curr.category] might be undefined, 
+even though you just wrote the code to create it on the line right above.
+
+The Solution (!): 
+By placing ! after the variable, 
+you are overriding the compiler. 
+You are telling TypeScript: "I promise you, I know for a fact this value exists right now. 
+Stop worrying and let me use .push()."
+
+The Risk: It turns off TypeScript's safety net for that specific line. 
+If you are wrong and the value is undefined, 
+your app will crash at runtime. 
+But in your code, you are 100% right, so it's safe to use!
+    
+    */
 
     return acc;
   }, {} as SummaryByCategories);
 }
 
-
-
-
-
 //---------------------------------------------------
 // TEST
 
-addExpense(205, Categories.TRANSPORT, "Uber ride to the airport");
-addExpense(205, Categories.TRANSPORT, "Uber ride to the airport");
-addExpense(14.5, Categories.FOOD, "Lunch at local cafe");
-addExpense(165, Categories.FOOD, "Lunch at local cafe");
-addExpense(105, Categories.FOOD, "Lunch at local cafe");
-addExpense(115, Categories.FOOD, "Lunch at local cafe");
-addExpense(145, Categories.FOOD, "Lunch at local cafe");
-addExpense(51, Categories.FOOD, "Lunch at local cafe");
-addExpense(133, Categories.FOOD, "Lunch at local cafe");
-addExpense(665, Categories.ENTERTAINMENT, "Movie tickets and snacks");
-addExpense(665, Categories.ENTERTAINMENT, "Movie tickets and snacks");
-addExpense(14.5, Categories.OTHER, "Uber ride to the airport");
-addExpense(14.5, Categories.OTHER, "Uber ride to the airport");
-addExpense(55, Categories.UTILITIES, "Buy medicine");
-addExpense(55, Categories.UTILITIES, "Buy medicine");
-console.log("Database:", database);
-// console.log(sortByCategory());
+// addExpense(205, Categories.TRANSPORT, "Uber ride to the airport");
+// addExpense(205, Categories.TRANSPORT, "Uber ride to the airport");
+// addExpense(14.5, Categories.FOOD, "Lunch at local cafe");
+// addExpense(165, Categories.FOOD, "Lunch at local cafe");
+// addExpense(105, Categories.FOOD, "Lunch at local cafe");
+// addExpense(115, Categories.FOOD, "Lunch at local cafe");
+// addExpense(145, Categories.FOOD, "Lunch at local cafe");
+// addExpense(51, Categories.FOOD, "Lunch at local cafe");
+// addExpense(133, Categories.FOOD, "Lunch at local cafe");
+// addExpense(665, Categories.ENTERTAINMENT, "Movie tickets and snacks");
+// addExpense(665, Categories.ENTERTAINMENT, "Movie tickets and snacks");
+// addExpense(14.5, Categories.OTHER, "Uber ride to the airport");
+// addExpense(14.5, Categories.OTHER, "Uber ride to the airport");
+// addExpense(55, Categories.UTILITIES, "Buy medicine");
+// addExpense(55, Categories.UTILITIES, "Buy medicine");
+// console.log("Database:", database);
+// // console.log(sortByCategory());
 
-viewTotalExpenseByCategory(Categories.FOOD, 50);
-console.log(summaryEachCategory());
+// viewTotalExpenseByCategory(Categories.FOOD, 50);
+// console.log(summaryEachCategory());
+
+export { addExpense, viewTotalExpenseByCategory, summaryEachCategory };
