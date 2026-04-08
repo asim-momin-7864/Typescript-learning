@@ -1,0 +1,85 @@
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding doesn't break width */
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+}
+
+button:hover { background-color: #2980b9; }
+
+.secondary-btn {
+  background-color: #2ecc71;
+  margin-bottom: 15px;
+}
+.secondary-btn:hover { background-color: #27ae60; }
+
+.message {
+  text-align: center;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+/* Styles for the generated summary */
+.category-block {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+.category-title {
+  display: flex;
+  justify-content: space-between;
+  color: #2c3e50;
+}
+.expense-item {
+  font-size: 0.9em;
+  color: #666;
+  margin-left: 10px;
+}
