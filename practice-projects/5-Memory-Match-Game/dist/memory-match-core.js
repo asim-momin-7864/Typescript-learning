@@ -1,4 +1,5 @@
 //* Memory Matching Game Core Logic
+//TODO wrappe up everything into Start game function
 // Array of cards Symboles
 const cardSymbolesArray = [
     "A",
@@ -121,7 +122,33 @@ export function flipCardStatus(Id) {
     flippedCard(Id);
 }
 //TODO Reset Game
-//TODO (extra) time limit - to solve whole 
+//* time limit function
+//* time formatter
+function timeFormatter(countDown) {
+    let min = String(Math.floor(countDown / 60)).padStart(2, "0");
+    let sec = String(countDown % 60);
+    console.log(` Time : ${min} : ${sec} `);
+    return {
+        min: min,
+        sec: sec,
+    };
+}
+//* time tracker
+let countDown = 60; // (1 min)
+function timeTicker() {
+    // check time is zero
+    if (countDown === 0) {
+        //TODO call reset game func
+        clearInterval(ID);
+        // show game over UI
+        console.log("Time End! Game Over");
+        return;
+    }
+    countDown = countDown - 1;
+    timeFormatter(countDown);
+}
+//* setInterval call each secound func
+let ID = setInterval(timeTicker, 1000);
 //TEST
 console.log("CardsArray :", cardsArray);
 //# sourceMappingURL=memory-match-core.js.map

@@ -1,8 +1,6 @@
 //* Memory Matching Game Core Logic
-        
 
 //TODO wrappe up everything into Start game function
-
 
 // Array of cards Symboles
 const cardSymbolesArray: string[] = [
@@ -113,9 +111,9 @@ function flippedCard(cardId: string): void {
   //   }
   // });
 
-const flippedCardsArray: Card[] = cardsArray.filter(
-  (card) => card.status === "Flipped"
-);
+  const flippedCardsArray: Card[] = cardsArray.filter(
+    (card) => card.status === "Flipped",
+  );
 
   // check any card fillped
   if (flippedCardsArray.length === 0) {
@@ -127,7 +125,6 @@ const flippedCardsArray: Card[] = cardsArray.filter(
 
   //* TEST
   console.log("flippedCardsArray ==>", flippedCardsArray);
-  
 
   //TODO more than 2 cards flliped
   if (flippedCardsArray.length > 2) {
@@ -168,10 +165,43 @@ export function flipCardStatus(Id: string): void {
   flippedCard(Id);
 }
 
-
 //TODO Reset Game
 
-//TODO (extra) time limit - to solve whole 
+//* time limit function
+
+//* time formatter
+function timeFormatter(countDown: number) {
+  let min: string = String(Math.floor(countDown / 60)).padStart(2, "0");
+  let sec: string = String(countDown % 60);
+
+  console.log(` Time : ${min} : ${sec} `);
+
+  return {
+    min: min,
+    sec: sec,
+  };
+}
+
+//* time tracker
+let countDown: number = 60; // (1 min)
+function timeTicker() {
+  // check time is zero
+  if (countDown === 0) {
+    //TODO call reset game func
+
+    clearInterval(ID);
+    // show game over UI
+    console.log("Time End! Game Over");
+    return;
+  }
+
+  countDown = countDown - 1;
+
+  timeFormatter(countDown);
+}
+
+//* setInterval call each secound func
+let ID = setInterval(timeTicker, 1000);
 
 //TEST
 console.log("CardsArray :", cardsArray);
