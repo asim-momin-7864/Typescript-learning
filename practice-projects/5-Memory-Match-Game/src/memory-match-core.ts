@@ -32,13 +32,56 @@ type Card = {
 
 //------------------------------------------------------------------------------------------------
 
+//! Mutation Code
+
+/*
+
+! Why this is dangerous in large apps:
+  If you directly change an object, 
+  the computer's memory address for that object stays the exact same. 
+  Modern UI frameworks look for new memory addresses to know when to redraw the screen. 
+  If you just mutate the old array, 
+  the UI often won't realize anything changed and will freeze.
+
+*/
+
+//* The Solution: Immutability.
+
+/*
+
+    Instead of modifying the existing array, 
+    you create a brand new array containing a mix of the untouched old cards 
+    and a brand new copied card with the updated status.
+
+    How to Write Immutable Code
+    To do this, we abandon forEach (which is designed for mutation) and use .map() combined with the Spread Operator (...).
+
+*/
+
 //* resetCards function
-function resetCards(cardsArray: Card[]): void {
-  cardsArray.forEach((card) => {
+// function resetCards(cardsArray: Card[]): void {
+//   cardsArray.forEach((card) => {
+//     if (card.status !== "Matched") {
+//       card.status = "Hidden";
+//     }
+//   });
+// }
+
+//* resetCards function with immutability
+function resetCards(cardsArray: Card[]): Card[] {
+  let newCardsArray: Card[] = cardsArray.map((card) => {
     if (card.status !== "Matched") {
-      card.status = "Hidden";
+      return {
+        ...card,
+        status: "Hidden",
+      };
     }
+
+    return card;
   });
+
+  // returing new array
+  return newCardsArray;
 }
 
 //* matchedCardStatus function
@@ -86,7 +129,7 @@ function cardMatcher(flippedCardsArray: Card[], cardsArray: Card[]): void {
 // as many tim user click on any card this function will execute
 
 // flipped card function
-function flippedCard(cardId: string, cardsArray: Card[]): void {
+function flippedCard(cardsArray: Card[]): void {
   // ALL ONE LOOP
 
   //* Conditions
@@ -145,16 +188,37 @@ function flippedCard(cardId: string, cardsArray: Card[]): void {
 
 //--------------------------------------------------------------------------
 
-// when user click card, we need to change that cards status from HIdden --> Filliped
-export function flipCardStatus(Id: string, cardsArray: Card[]): void {
-  cardsArray.forEach((card) => {
+//* when user click card, we need to change that cards status from HIdden --> Filliped
+
+//! Mutation Problem
+
+// export function flipCardStatus(Id: string, cardsArray: Card[]): void {
+//   cardsArray.forEach((card) => {
+//     if (card.cardId === Id) {
+//       card.status = "Flipped";
+//     }
+//   });
+
+//   // called flipped card ()
+//   flippedCard(Id, cardsArray);
+// }
+
+//* Solution : Immutability code
+
+export function flipCardStatus(Id: string, cardsArray: Card[]) {
+  let newCardsArray: Card[] = cardsArray.map((card) => {
     if (card.cardId === Id) {
-      card.status = "Flipped";
+      return {
+        ...card,
+        status: "Flipped",
+      };
     }
+
+    return card;
   });
 
   // called flipped card ()
-  flippedCard(Id, cardsArray);
+  flippedCard(newCardsArray);
 }
 
 //-----------------------------------------------------------------------------
@@ -247,11 +311,11 @@ export function startGame() {
 
   //TODO #2 Fisher-Yatches Shuffle Algorithm
 
-  for (let index = (cardSymbolesArray.length-1); index > 0; index--) {
+  for (let index = cardSymbolesArray.length - 1; index > 0; index--) {
     // random number generate between 0 - T(idx)
 
     // let Ridx = Math.floor(Math.random() * cardSymbolesArray.length) + 10;
-  let Ridx = Math.floor( Math.random() * (index + 1) )
+    let Ridx = Math.floor(Math.random() * (index + 1));
     // temporarly Ridx symbole holder
     let Rsymbole: string | undefined = cardSymbolesArray[Ridx];
 
