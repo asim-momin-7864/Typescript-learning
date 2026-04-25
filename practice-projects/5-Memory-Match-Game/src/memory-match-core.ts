@@ -316,6 +316,7 @@ export function startGame() {
 
     // let Ridx = Math.floor(Math.random() * cardSymbolesArray.length) + 10;
     let Ridx = Math.floor(Math.random() * (index + 1));
+    
     // temporarly Ridx symbole holder
     let Rsymbole: string | undefined = cardSymbolesArray[Ridx];
 
