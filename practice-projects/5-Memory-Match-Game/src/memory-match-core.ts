@@ -114,7 +114,7 @@ function flippedCard(cardId: string, cardsArray: Card[]): void {
   }
 
   //* TEST
-  console.log("flippedCardsArray ==>", flippedCardsArray);
+  // console.log("flippedCardsArray ==>", flippedCardsArray);
 
   //TODO more than 2 cards flliped
   if (flippedCardsArray.length > 2) {
@@ -240,10 +240,53 @@ export function startGame() {
   countDown = 30;
 
   //* We need to shuffle our symbles indexes, to add randomes into games, other wise it becomes exact same
+
+  //! Not Reliable
   //* #1 basic Quick way we are using
-  cardSymbolesArray.sort(() => 0.5 - Math.random());
+  // cardSymbolesArray.sort(() => 0.5 - Math.random());
 
   //TODO #2 Fisher-Yatches Shuffle Algorithm
+
+  for (let index = (cardSymbolesArray.length-1); index > 0; index--) {
+    // random number generate between 0 - T(idx)
+
+    // let Ridx = Math.floor(Math.random() * cardSymbolesArray.length) + 10;
+  let Ridx = Math.floor( Math.random() * (index + 1) )
+    // temporarly Ridx symbole holder
+    let Rsymbole: string | undefined = cardSymbolesArray[Ridx];
+
+    // current target Index T(idx)
+    // loop index is T (idx)
+    let targetSymbole: string | undefined = cardSymbolesArray[index];
+
+    /*
+! ERRORS
+
+ Type 'string | undefined' is not assignable to type 'string'.
+ Type 'undefined' is not assignable to type 'string'.
+
+  Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+
+ * - try to avoid
+   as string (Type Assertion)
+   Non-Null Assertion Operator (!)
+
+*/
+
+    // insted
+    if (
+      typeof Rsymbole === "undefined" ||
+      typeof targetSymbole === "undefined"
+    ) {
+      console.log("Something went wrong ! Invalid Symbole");
+      return;
+    }
+
+    // swap
+    cardSymbolesArray[Ridx] = targetSymbole;
+    cardSymbolesArray[index] = Rsymbole;
+  }
 
   // Generate cards with ids and status (Objects)
   let cardsArray: Card[] = cardSymbolesArray.map((symbole) => {

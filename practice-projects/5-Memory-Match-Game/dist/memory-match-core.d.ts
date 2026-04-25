@@ -10,6 +10,6 @@ export declare function timeTicker(cardsArray: Card[]): {
     sec: string;
 } | undefined;
 export declare function gameOver(cardsArray: Card[]): boolean;
-export declare function startGame(): Card[];
+export declare function startGame(): Card[] | undefined;
 export {};
 //# sourceMappingURL=memory-match-core.d.ts.map
