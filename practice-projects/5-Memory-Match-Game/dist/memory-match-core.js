@@ -1,5 +1,6 @@
 //* Memory Matching Game Core Logic
-//TODO wrappe up everything into Start game function
+//* Game Over flag for UI
+export let isGameOver = false;
 // Array of cards Symboles
 const cardSymbolesArray = [
     "A",
@@ -19,18 +20,9 @@ const cardSymbolesArray = [
     "G",
     "H",
 ];
-//* We need to shuffle our symbles indexes, to add randomes into games, other wise it becomes exact same
-//* basic Quick way we are using
-cardSymbolesArray.sort(() => 0.5 - Math.random());
-export const cardsArray = cardSymbolesArray.map((symbole) => {
-    return {
-        cardId: crypto.randomUUID(),
-        symbole: symbole,
-        status: "Hidden",
-    };
-});
+//------------------------------------------------------------------------------------------------
 //* resetCards function
-function resetCards() {
+function resetCards(cardsArray) {
     cardsArray.forEach((card) => {
         if (card.status !== "Matched") {
             card.status = "Hidden";
@@ -38,7 +30,7 @@ function resetCards() {
     });
 }
 //* matchedCardStatus function
-function matchedCardStatus(card1, card2) {
+function matchedCardStatus(card1, card2, cardsArray) {
     cardsArray.forEach((card) => {
         // find these 2 cards
         if (card.cardId === card1.cardId || card.cardId === card2.cardId) {
@@ -48,7 +40,7 @@ function matchedCardStatus(card1, card2) {
     return;
 }
 //* card Matcher function
-function cardMatcher(flippedCardsArray) {
+function cardMatcher(flippedCardsArray, cardsArray) {
     // both cards
     let card1 = flippedCardsArray[0];
     let card2 = flippedCardsArray[1];
@@ -60,19 +52,20 @@ function cardMatcher(flippedCardsArray) {
     // matching cards - checking
     if (card1.symbole !== card2.symbole) {
         console.log("both cards are different");
-        resetCards();
+        resetCards(cardsArray);
         return;
     }
     console.log("Both cards are matched");
-    matchedCardStatus(card1, card2);
+    matchedCardStatus(card1, card2, cardsArray);
 }
+//---------------------------------------------------------------------------
 //! MISTAKE
 //* Data type to store flipped card at once
 // const flippedCardsArray: Card[] = [];
 // this functions is attched to all cards on ui, as user click card this function will handle,
 // as many tim user click on any card this function will execute
 // flipped card function
-function flippedCard(cardId) {
+function flippedCard(cardId, cardsArray) {
     // ALL ONE LOOP
     //* Conditions
     //! MISTAKE - global var mutation
@@ -83,7 +76,9 @@ function flippedCard(cardId) {
     //     return;
     //   }
     // });
-    const flippedCardsArray = cardsArray.filter((card) => card.status === "Flipped");
+    // empty array first
+    let flippedCardsArray = [];
+    flippedCardsArray = cardsArray.filter((card) => card.status === "Flipped");
     // check any card fillped
     if (flippedCardsArray.length === 0) {
         console.log(" No card is flipped, Please Flipped Card ");
@@ -96,7 +91,7 @@ function flippedCard(cardId) {
     if (flippedCardsArray.length > 2) {
         console.log(" More than 2 cards are flipped, Flipp only 2 cards ");
         // reset function
-        resetCards();
+        resetCards(cardsArray);
         return;
     }
     //   TODO Find this card exists ?
@@ -109,24 +104,27 @@ function flippedCard(cardId) {
     }
     //* only 2 cards exists
     // card Matcher
-    cardMatcher(flippedCardsArray);
+    cardMatcher(flippedCardsArray, cardsArray);
 }
+//--------------------------------------------------------------------------
 // when user click card, we need to change that cards status from HIdden --> Filliped
-export function flipCardStatus(Id) {
+export function flipCardStatus(Id, cardsArray) {
     cardsArray.forEach((card) => {
         if (card.cardId === Id) {
             card.status = "Flipped";
         }
     });
     // called flipped card ()
-    flippedCard(Id);
+    flippedCard(Id, cardsArray);
 }
-//TODO Reset Game
+//-----------------------------------------------------------------------------
 //* time limit function
+// keep it global because we are changing it continously and using in differnt fucntions , it new value
+let countDown = 30; // (30 sec)
 //* time formatter
-function timeFormatter(countDown) {
+function timeFormatter() {
     let min = String(Math.floor(countDown / 60)).padStart(2, "0");
-    let sec = String(countDown % 60);
+    let sec = String(countDown % 60).padStart(2, "0");
     console.log(` Time : ${min} : ${sec} `);
     return {
         min: min,
@@ -134,21 +132,72 @@ function timeFormatter(countDown) {
     };
 }
 //* time tracker
-let countDown = 60; // (1 min)
-function timeTicker() {
+export function timeTicker(cardsArray) {
     // check time is zero
     if (countDown === 0) {
-        //TODO call reset game func
-        clearInterval(ID);
+        gameOver(cardsArray);
+        //! this is UI part donot mix which engin logic
+        // clearInterval(ID);
         // show game over UI
         console.log("Time End! Game Over");
         return;
     }
     countDown = countDown - 1;
-    timeFormatter(countDown);
+    //* HOW TO RETURN ANOTHER CALLED FUNC VALUE ...  means its return value
+    //!  IMP POINT: if parent func have return type : void , then inside called function even if return some value , it cannot get out of parent function ... functions run inside each others contetx , child in parents
+    //Example
+    // timeFormatter();
+    // we did not get -->   { min: min,sec: sec }
+    // bcz timeTicker has :void return type
+    //* give attension while writting logic , otherwise wont works
+    //* SOLUTION
+    return timeFormatter();
 }
-//* setInterval call each secound func
-let ID = setInterval(timeTicker, 1000);
+//------------------------------------------------------------------------------------------------
+//TODO Reset Game
+function resetWholeGame(cardsArray) {
+    // empty array
+    cardsArray = [];
+    //TODO call start game func
+    startGame();
+}
+//TODO gameOver
+export function gameOver(cardsArray) {
+    // game over flag
+    isGameOver = true;
+    let ID = setTimeout(() => {
+        resetWholeGame(cardsArray);
+        clearTimeout(ID);
+    }, 1000);
+    return isGameOver;
+}
+//---------------------------------------------------------------------------------
+//TODO Start Game Func
+export function startGame() {
+    // vars
+    isGameOver = false;
+    countDown = 30;
+    //* We need to shuffle our symbles indexes, to add randomes into games, other wise it becomes exact same
+    //* #1 basic Quick way we are using
+    cardSymbolesArray.sort(() => 0.5 - Math.random());
+    //TODO #2 Fisher-Yatches Shuffle Algorithm
+    // Generate cards with ids and status (Objects)
+    let cardsArray = cardSymbolesArray.map((symbole) => {
+        return {
+            cardId: crypto.randomUUID(),
+            symbole: symbole,
+            status: "Hidden",
+        };
+    });
+    // start func
+    //! This handle on UI
+    // setInterval call each secound func
+    // let ID = setInterval(timeTicker, 1000, countDown);
+    // Need to return
+    // cardsArray
+    return cardsArray;
+}
+startGame();
 //TEST
-console.log("CardsArray :", cardsArray);
+// console.log("CardsArray :", cardsArray);
 //# sourceMappingURL=memory-match-core.js.map

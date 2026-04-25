@@ -22,16 +22,52 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* The 4x4 Grid */
+/* Controls (Timer and Button) */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 445px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.timer-display {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: #3b3b58;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+.reset-btn {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.reset-btn:hover {
+  background-color: #e68a00;
+}
+
+/* Game Board */
 .game-board {
   display: grid;
   grid-template-columns: repeat(4, 100px);
   grid-template-rows: repeat(4, 100px);
   gap: 15px;
-  perspective: 1000px; /* Required for the 3D flip effect */
+  perspective: 1000px;
 }
 
-/* Card Container */
+/* Card Styles */
 .card {
   width: 100px;
   height: 100px;
@@ -39,7 +75,6 @@ h1 {
   background-color: transparent;
 }
 
-/* The element that actually flips */
 .card-inner {
   position: relative;
   width: 100%;
@@ -49,24 +84,23 @@ h1 {
   transform-style: preserve-3d;
 }
 
-/* Trigger the flip via CSS class */
+/* Flip Trigger */
 .card.flipped .card-inner,
 .card.matched .card-inner {
   transform: rotateY(180deg);
 }
 
-/* Make matched cards look a bit different */
+/* Matched Card styling */
 .card.matched .card-inner .card-back {
   background-color: #4caf50;
   box-shadow: 0 0 10px #4caf50;
 }
 
-/* Front and Back of the card */
 .card-front, .card-back {
   position: absolute;
   width: 100%;
   height: 100%;
-  -webkit-backface-visibility: hidden; /* Safari */
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   display: flex;
   justify-content: center;
@@ -77,13 +111,11 @@ h1 {
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-/* The hidden side (Question Mark) */
 .card-front {
   background-color: #3b3b58;
   color: #a0a0c0;
 }
 
-/* The revealed side (Symbol) */
 .card-back {
   background-color: #ff9800;
   color: white;
