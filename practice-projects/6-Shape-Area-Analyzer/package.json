@@ -1,0 +1,21 @@
+{
+  "devDependencies": {
+    "tsx": "^4.21.0"
+  },
+  "name": "6-shape-area-analyzer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "esbuild": "^0.27.7",
+    "get-tsconfig": "^4.14.0",
+    "resolve-pkg-maps": "^1.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
