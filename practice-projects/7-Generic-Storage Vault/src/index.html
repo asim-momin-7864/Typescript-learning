@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generic Storage Vault</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="vault-title">Vault Manager</h1>
+        
+        <div class="input-group">
+            <input type="text" id="item-name" placeholder="Item Name (e.g., Bread)">
+            <input type="number" id="item-qty" placeholder="Quantity">
+            <button id="add-btn">Add to Vault</button>
+        </div>
+
+        <h2>Vault Contents:</h2>
+        <div id="output-list">
+            <p class="empty-msg">Vault is empty.</p>
+        </div>
+        <hr style="margin: 20px 0; border: none; border-top: 1px solid #ccc;">
+        
+        <h2>Find Specific Item</h2>
+        <div class="input-group">
+            <input type="text" id="search-id" placeholder="Paste Item ID here...">
+            <button id="search-btn" style="background-color: #28a745;">Search by ID</button>
+        </div>
+        
+        <div id="search-result"></div>
+    </div>
+
+    <script type="module" src="./dom.js"></script>
+</body>
+</html>

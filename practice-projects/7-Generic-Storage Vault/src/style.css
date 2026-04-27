@@ -1,0 +1,61 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 400px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.item-card {
+    background: #e9ecef;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border-left: 4px solid #007bff;
+}
+
+.item-card small {
+    color: #666;
+    font-size: 0.8em;
+}
+
+.empty-msg {
+    color: #888;
+    font-style: italic;
+}

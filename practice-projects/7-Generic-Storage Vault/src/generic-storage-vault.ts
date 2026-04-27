@@ -1,10 +1,9 @@
-import { v4 as uuidv4 } from "uuid";
 
 //* Generic Items Vault
 // using generics heavily
 
 //TODO interface for item
-interface Item {
+export interface Item {
   id: string;
   name: string;
   quantity: number;
@@ -14,7 +13,7 @@ interface Item {
 // class with generic
 // private
 
-class DataStorage<T extends { id: string }> {
+export class DataStorage<T extends { id: string }> {
   // properties (state)
   private vault: T[] = []; //  array of T
   public vaultName: string;
@@ -55,8 +54,11 @@ class DataStorage<T extends { id: string }> {
   }
 }
 
-//TODO Master function
+//-------------------------------------------------------------------------------
 
+//* TESTING on TERMINAL 
+
+// Master function
 function MasterFunction() {
   // intance
   let vaultStorage = new DataStorage<Item>("Food Vault");
@@ -64,25 +66,25 @@ function MasterFunction() {
   //* TEST
   // lets add few items from here
   vaultStorage.addItem({
-    id: uuidv4(),
+    id: crypto.randomUUID(),
     name: "Golden Bakers Bread",
     quantity: 25,
   });
 
   vaultStorage.addItem({
-    id: uuidv4(),
+    id: crypto.randomUUID(),
     name: "Golden Bakers Bread",
     quantity: 25,
   });
 
   vaultStorage.addItem({
-    id: uuidv4(),
+    id: crypto.randomUUID(),
     name: "Food Court Cheese Slice",
     quantity: 120,
   });
 
   vaultStorage.addItem({
-    id: uuidv4(),
+    id: crypto.randomUUID(),
     name: "Cinema Butter Popcorn",
     quantity: 85,
   });

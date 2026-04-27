@@ -1,8 +1,9 @@
-import { v4 as uuidv4 } from "uuid";
-//TODO Storage Value (array of items)
+
+//* Storage Value (array of items)
 // class with generic
 // private
-class DataStorage {
+
+export class DataStorage {
     // properties (state)
     vault = []; //  array of T
     vaultName;
@@ -10,13 +11,13 @@ class DataStorage {
         this.vaultName = vaultName; // why only this property in constructor ,
         // because we want to store to keep it permanent and initial value from user
     }
-    //TODO methods addItem
+    //* methods addItem
     addItem(newItem) {
         // push into array
         this.vault.push(newItem);
         console.log(`New Item added into ${this.vaultName}`);
     }
-    //TODO methods getItem
+    //* methods getItem
     getItem(id) {
         let foundItem = this.vault.filter((item) => item.id === id);
         // conditions
@@ -35,29 +36,35 @@ class DataStorage {
         return this.vault;
     }
 }
-//TODO Master function
+
+
+
+
+//-------------------------------------------------------------------------------
+//* TESTING on TERMINAL 
+// Master function
 function MasterFunction() {
     // intance
     let vaultStorage = new DataStorage("Food Vault");
     //* TEST
     // lets add few items from here
     vaultStorage.addItem({
-        id: uuidv4(),
+        id: crypto.randomUUID(),
         name: "Golden Bakers Bread",
         quantity: 25,
     });
     vaultStorage.addItem({
-        id: uuidv4(),
+        id: crypto.randomUUID(),
         name: "Golden Bakers Bread",
         quantity: 25,
     });
     vaultStorage.addItem({
-        id: uuidv4(),
+        id: crypto.randomUUID(),
         name: "Food Court Cheese Slice",
         quantity: 120,
     });
     vaultStorage.addItem({
-        id: uuidv4(),
+        id: crypto.randomUUID(),
         name: "Cinema Butter Popcorn",
         quantity: 85,
     });
