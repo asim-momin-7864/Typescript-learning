@@ -20,7 +20,7 @@ function asyncTaskSimulator(): Promise<ApiResponse> {
         let randomNumber: number = Math.random();
         console.log("Random Number ",randomNumber);
 
-        if (randomNumber >= 0.4) {
+        if (randomNumber > 0.7) {
             resolve({
                 status: 200,
                 message: "Request Successful",
@@ -48,7 +48,7 @@ function retryRequestFunc(apiCallFunc: () => Promise<ApiResponse>, tryCount: num
     newPromise
         .then(
             (response) => {
-                console.log(response);
+               console.log(`\n 🟢 [SUCCESS] Data Fetched! Status: ${response.status} | ${response.message}\n`);
             }
         )
         .catch(
@@ -57,12 +57,11 @@ function retryRequestFunc(apiCallFunc: () => Promise<ApiResponse>, tryCount: num
                 // checking this if we get error from else or in different format
                 if (response instanceof Error) {
 
-                    console.log(`Request to server is failed, Attempte ${tryCount}, Error ${response.message}`);
+                   console.log(`\n 🔴 [FAILED] Request to server failed. Attempt ${tryCount} | Error: ${response.message}\n`);
 
                     // retry condition
                     if (tryCount <= maxRetry) {
-                        console.log(`Retrying to Request again .... wait`);
-
+                      console.log(`\n⏳ [RETRYING] Waiting 2 seconds before trying again...\n`);
                         // some rest between sending new request
                         let ID = setTimeout(
                             () => {
