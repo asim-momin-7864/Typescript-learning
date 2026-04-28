@@ -6,7 +6,7 @@ function asyncTaskSimulator() {
         // to simulate request can be successful or failed
         let randomNumber = Math.random();
         console.log("Random Number ", randomNumber);
-        if (randomNumber >= 0.4) {
+        if (randomNumber > 0.7) {
             resolve({
                 status: 200,
                 message: "Request Successful",
