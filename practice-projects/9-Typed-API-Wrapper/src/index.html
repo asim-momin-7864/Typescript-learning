@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typed API Explorer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>Data Explorer</h1>
+            <div class="button-group">
+                <button id="btn-users" class="btn">Fetch Users</button>
+                <button id="btn-posts" class="btn">Fetch Posts</button>
+            </div>
+        </header>
+
+        <!-- Loading or Error messages will go here -->
+        <p id="status-message" class="hidden"></p>
+
+        <!-- Cards will be injected here -->
+        <div id="results-grid" class="grid"></div>
+    </main>
+
+    <!-- Import your compiled UI file -->
+    <script type="module" src="./dom.js"></script>
+</body>
+</html>
