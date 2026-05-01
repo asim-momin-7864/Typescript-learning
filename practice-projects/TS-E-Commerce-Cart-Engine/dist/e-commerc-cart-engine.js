@@ -1,7 +1,7 @@
 //* E Commerc Cart Engine
 //TODO  DB Array with data
 // We use (Product | Book)[] so the array safely accepts both base products and extended books
-const inventory = [
+export const inventory = [
     {
         id: "bk_001",
         name: "Powerless",
@@ -154,7 +154,7 @@ const inventory = [
     },
 ];
 //TODO Master function
-function cartEngine(action, inventory, userCart) {
+export function cartEngine(action, inventory, userCart) {
     switch (action.type) {
         //Add Item func
         case "ADD_ITEM":
@@ -245,7 +245,7 @@ function cartEngine(action, inventory, userCart) {
     }
 }
 //TODO Billing function
-function billingFunction(userCartStatus, taxAmount) {
+export function billingFunction(userCartStatus, taxAmount) {
     // subtotal
     let subTotal = userCartStatus.items.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0);
     //* 2. The "Financial" Way (Rounding Half Up)
@@ -357,5 +357,4 @@ console.log(userCart);
 console.log("\n");
 // Billing
 console.log(billingFunction(userCart, 118));
-export {};
 //# sourceMappingURL=e-commerc-cart-engine.js.map

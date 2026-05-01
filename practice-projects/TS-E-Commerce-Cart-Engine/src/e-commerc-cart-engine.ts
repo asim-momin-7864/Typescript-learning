@@ -20,11 +20,11 @@ interface Book extends Product {
 
 // Billing Format
 interface BillingSummary {
-    subTotal: number,
-    discountPercentage: number,
-    discountAmount: number,
-    taxAmount: number,
-    finalTotal: number,
+    subTotal: number;
+    discountPercentage: number;
+    discountAmount: number;
+    taxAmount: number;
+    finalTotal: number;
 }
 
 //* CartItem interface
@@ -45,6 +45,7 @@ and we use a type alias with an Intersection (&) instead of an interface.
 // we are making generic type
 // so here T is declaring , No any data type will be accepted.
 //* Explanation of LHS --- any data type which minimum satisficed Product properties can allowed
+
 type CartItem<T extends Product> = T & {
     quantity: number;
 };
@@ -61,7 +62,7 @@ interface CartStatus<T extends Product> {
 
 //TODO  DB Array with data
 // We use (Product | Book)[] so the array safely accepts both base products and extended books
-const inventory: (Product | Book)[] = [
+export const inventory: (Product | Book)[] = [
     {
         id: "bk_001",
         name: "Powerless",
@@ -235,7 +236,7 @@ type QuantityChange = {
 };
 
 //TODO Master function
-function cartEngine<T extends Product>(
+export function cartEngine<T extends Product>(
     action: AddItem | RemoveItem | QuantityChange,
     inventory: T[],
     userCart: CartStatus<T>,
@@ -243,8 +244,6 @@ function cartEngine<T extends Product>(
     switch (action.type) {
         //Add Item func
         case "ADD_ITEM":
-
-
             //find item from inventory
             let pickItem: T | undefined = inventory.find(
                 (item) => item.id === action.id,
@@ -262,27 +261,23 @@ function cartEngine<T extends Product>(
                 quantity: 1,
             };
 
-
             //* is item already exists into cart? --> then increase quantity by +1
             let isExists: boolean = userCart.items.includes(addedItem);
             if (isExists) {
-
                 // create new updated copy
-                let updatedCopyItems: CartItem<T>[] = userCart.items.map(
-                    (item) => {
-                        if (item.id === addedItem.id) {
-                            return item;
-                        }
-
+                let updatedCopyItems: CartItem<T>[] = userCart.items.map((item) => {
+                    if (item.id === addedItem.id) {
                         return item;
                     }
-                )
+
+                    return item;
+                });
 
                 // update whole userCart
                 return {
                     ...userCart,
                     items: updatedCopyItems,
-                }
+                };
             }
 
             // add to cart
@@ -291,10 +286,9 @@ function cartEngine<T extends Product>(
             // userCart.items.push(addedItem);
             // return userCart;
 
-            //? how , we are updating items field with new one right ?? 
+            //? how , we are updating items field with new one right ??
             //* --> but you are using old whole userCart var, just changing one filed by assign = operation  , that is mutating  variable is still old and you are asssigning new value
-            //* we have to return whole new data with new var (name is same but re-declaring in memory) and new values (giving new values while declaring) , even other fields e.g like discountApplied is not chnaged   
-
+            //* we have to return whole new data with new var (name is same but re-declaring in memory) and new values (giving new values while declaring) , even other fields e.g like discountApplied is not chnaged
 
             return {
                 ...userCart,
@@ -303,7 +297,6 @@ function cartEngine<T extends Product>(
 
         // Remove Item func
         case "REMOVE_ITEM":
-
             //* remove operation
             //! Lengthyy Approch : The Fix: Even though toSpliced is immutable (it returns a new array), you still need to return a new top-level object.
 
@@ -328,16 +321,16 @@ function cartEngine<T extends Product>(
 
         //quantity change
         case "QTY_CHANGE":
-
             //* if  quantity is 0
             if (action.qty === 0) {
-
-                let newUpdatedCart: CartItem<T>[] = userCart.items.filter((item) => item.id !== action.id)
+                let newUpdatedCart: CartItem<T>[] = userCart.items.filter(
+                    (item) => item.id !== action.id,
+                );
 
                 return {
                     ...userCart,
                     items: newUpdatedCart,
-                }
+                };
             }
 
             let newUpdatedCart: CartItem<T>[] = userCart.items.map((item) => {
@@ -368,11 +361,13 @@ function cartEngine<T extends Product>(
 
 //TODO Billing function
 
-function billingFunction<T extends Product>(userCartStatus: CartStatus<T>, taxAmount: number): BillingSummary {
-
+export function billingFunction<T extends Product>(
+    userCartStatus: CartStatus<T>,
+    taxAmount: number,
+): BillingSummary {
     // subtotal
     let subTotal: number = userCartStatus.items.reduce(
-        (acc, curr) => acc + (curr.price * curr.quantity),
+        (acc, curr) => acc + curr.price * curr.quantity,
         0,
     );
 
@@ -384,25 +379,25 @@ function billingFunction<T extends Product>(userCartStatus: CartStatus<T>, taxAm
     const roundMoney = (num: number) => Math.round(num * 100) / 100;
 
     /*
-     
-    ? how roundMoney works?
-     Math.round -The Math.round() static method returns the value of a number rounded to the nearest integer.
-
-     0.9 -> 1
-     5.95 -> 6
-     5.5 -> 6
-     5.05 -> 6
-     -5.05 -> -5
-
-     so lets shift decimal point, and make our number bigger ,so when we round up we dont messup with main number (before decimal .)
        
-     to make number shift 
-     245.6753 --> 24567.23434  (multiply by * 100)
-     Math.round() --> 24568 (remove extra decimal values)
-     then --> get back how many decimals you want .. here we want 2
-     ---> 245.68 (divide by 100)
-
-     */
+      ? how roundMoney works?
+       Math.round -The Math.round() static method returns the value of a number rounded to the nearest integer.
+  
+       0.9 -> 1
+       5.95 -> 6
+       5.5 -> 6
+       5.05 -> 6
+       -5.05 -> -5
+  
+       so lets shift decimal point, and make our number bigger ,so when we round up we dont messup with main number (before decimal .)
+         
+       to make number shift 
+       245.6753 --> 24567.23434  (multiply by * 100)
+       Math.round() --> 24568 (remove extra decimal values)
+       then --> get back how many decimals you want .. here we want 2
+       ---> 245.68 (divide by 100)
+  
+       */
 
     subTotal = roundMoney(subTotal);
 
@@ -415,14 +410,13 @@ function billingFunction<T extends Product>(userCartStatus: CartStatus<T>, taxAm
     // // if discount applied
     // finalTotal = subTotal - userCartStatus.discountApplied
 
-
     // discount
     let discountPercentage: number = userCartStatus.discountApplied ?? 0;
     let discountAmount: number = (subTotal * discountPercentage) / 100;
     discountAmount = roundMoney(discountAmount);
 
     // final
-    let taxableAmount: number = subTotal - discountAmount
+    let taxableAmount: number = subTotal - discountAmount;
 
     let finalTotal: number = taxableAmount + taxAmount;
     finalTotal = roundMoney(finalTotal);
@@ -438,8 +432,7 @@ function billingFunction<T extends Product>(userCartStatus: CartStatus<T>, taxAm
 
     // return
     return billingSummary;
-
-};
+}
 
 //=========================================================
 
@@ -480,9 +473,9 @@ let userCart: CartStatus<Product | Book> = {
 
 //* Actions
 
-// as many time we perform some action backend will update global userCart var (state); 
+// as many time we perform some action backend will update global userCart var (state);
 //  thats how we can get new updated cart state each time
-// without direclty mutating global variable 
+// without direclty mutating global variable
 
 userCart = cartEngine<Product | Book>(addBook1, inventory, userCart);
 console.log("\n");
