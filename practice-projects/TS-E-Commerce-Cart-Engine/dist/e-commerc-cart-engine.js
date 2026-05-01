@@ -158,7 +158,7 @@ function cartEngine(action, inventory, userCart) {
     switch (action.type) {
         //Add Item func
         case "ADD_ITEM":
-            //find item
+            //find item from inventory
             let pickItem = inventory.find((item) => item.id === action.id);
             // undefined case
             if (typeof pickItem === "undefined") {
@@ -170,19 +170,40 @@ function cartEngine(action, inventory, userCart) {
                 ...pickItem,
                 quantity: 1,
             };
+            //* is item already exists into cart? --> then increase quantity by +1
+            let isExists = userCart.items.includes(addedItem);
+            if (isExists) {
+                // create new updated copy
+                let updatedCopyItems = userCart.items.map((item) => {
+                    if (item.id === addedItem.id) {
+                        return item;
+                    }
+                    return item;
+                });
+                // update whole userCart
+                return {
+                    ...userCart,
+                    items: updatedCopyItems,
+                };
+            }
             // add to cart
             //! Mutation
             // userCart.items.push(addedItem);
             // return userCart;
+            //? how , we are updating items field with new one right ?? 
+            //* --> but you are using old whole userCart var, just changing one filed by assign = operation  , that is mutating  variable is still old and you are asssigning new value
+            //* we have to return whole new data with new var (name is same but re-declaring in memory) and new values (giving new values while declaring) , even other fields e.g like discountApplied is not chnaged   
             return {
                 ...userCart,
                 items: [...userCart.items, addedItem],
             };
         // Remove Item func
         case "REMOVE_ITEM":
-            let indexOfItem = inventory.findIndex((element) => element.id === action.id);
-            // remove
+            //* remove operation
             //! Lengthyy Approch : The Fix: Even though toSpliced is immutable (it returns a new array), you still need to return a new top-level object.
+            // let indexOfItem: number = inventory.findIndex(
+            //     (element) => element.id === action.id,
+            // );
             // let updatedCart: CartItem<T>[] = userCart.items.toSpliced(indexOfItem - 1, 1);
             //* Short Way: Use .filter() to remove an item by ID; it's cleaner and less prone to "off-by-one" index errors.
             let updatedCart = userCart.items.filter((item) => item.id !== action.id);
@@ -194,9 +215,14 @@ function cartEngine(action, inventory, userCart) {
             };
         //quantity change
         case "QTY_CHANGE":
-            // if  quantity is 0
-            // if (action.qty === 0) {
-            // }
+            //* if  quantity is 0
+            if (action.qty === 0) {
+                let newUpdatedCart = userCart.items.filter((item) => item.id !== action.id);
+                return {
+                    ...userCart,
+                    items: newUpdatedCart,
+                };
+            }
             let newUpdatedCart = userCart.items.map((item) => {
                 if (item.id === action.id) {
                     return {
@@ -219,6 +245,63 @@ function cartEngine(action, inventory, userCart) {
     }
 }
 //TODO Billing function
+function billingFunction(userCartStatus, taxAmount) {
+    // subtotal
+    let subTotal = userCartStatus.items.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0);
+    //* 2. The "Financial" Way (Rounding Half Up)
+    /* Standard toFixed() can sometimes round inconsistently due to how computers handle binary decimals. For more accurate financial rounding, use Math.round() with a multiplier */
+    // Rounds to 2 decimal places accurately
+    const roundMoney = (num) => Math.round(num * 100) / 100;
+    /*
+     
+    ? how roundMoney works?
+     Math.round -The Math.round() static method returns the value of a number rounded to the nearest integer.
+
+     0.9 -> 1
+     5.95 -> 6
+     5.5 -> 6
+     5.05 -> 6
+     -5.05 -> -5
+
+     so lets shift decimal point, and make our number bigger ,so when we round up we dont messup with main number (before decimal .)
+       
+     to make number shift
+     245.6753 --> 24567.23434  (multiply by * 100)
+     Math.round() --> 24568 (remove extra decimal values)
+     then --> get back how many decimals you want .. here we want 2
+     ---> 245.68 (divide by 100)
+
+     */
+    subTotal = roundMoney(subTotal);
+    //! over complex ways
+    // let finalTotal: number;
+    // // if no discount applied , discount === 0 / null
+    // if (userCartStatus.discountApplied === null) {
+    //     finalTotal = subTotal + taxAmount;
+    // };
+    // // if discount applied
+    // finalTotal = subTotal - userCartStatus.discountApplied
+    // discount
+    let discountPercentage = userCartStatus.discountApplied ?? 0;
+    let discountAmount = (subTotal * discountPercentage) / 100;
+    discountAmount = roundMoney(discountAmount);
+    // final
+    let taxableAmount = subTotal - discountAmount;
+    let finalTotal = taxableAmount + taxAmount;
+    finalTotal = roundMoney(finalTotal);
+    // billing summary
+    let billingSummary = {
+        subTotal: subTotal,
+        discountPercentage: discountPercentage,
+        discountAmount: discountAmount,
+        taxAmount: taxAmount,
+        finalTotal: finalTotal,
+    };
+    // return
+    return billingSummary;
+}
+;
+//=========================================================
 //* TEST
 let addBook1 = {
     type: "ADD_ITEM",
@@ -230,11 +313,11 @@ let addBook2 = {
 };
 let item1 = {
     type: "ADD_ITEM",
-    id: "el_002",
+    id: "el_003",
 };
 let item2 = {
     type: "ADD_ITEM",
-    id: "el_002",
+    id: "el_005",
 };
 let removeItem = {
     type: "REMOVE_ITEM",
@@ -247,8 +330,12 @@ let quantityItem = {
 };
 let userCart = {
     items: [],
-    discountApplied: 0,
+    discountApplied: 40,
 };
+//* Actions
+// as many time we perform some action backend will update global userCart var (state); 
+//  thats how we can get new updated cart state each time
+// without direclty mutating global variable 
 userCart = cartEngine(addBook1, inventory, userCart);
 console.log("\n");
 console.log(userCart);
@@ -261,11 +348,14 @@ console.log(userCart);
 userCart = cartEngine(item2, inventory, userCart);
 console.log("\n");
 console.log(userCart);
-userCart = cartEngine(removeItem, inventory, userCart);
-console.log("\n");
-console.log(userCart);
+// userCart = cartEngine<Product | Book>(removeItem, inventory, userCart);
+// console.log("\n");
+// console.log(userCart);
 userCart = cartEngine(quantityItem, inventory, userCart);
 console.log("\n");
 console.log(userCart);
+console.log("\n");
+// Billing
+console.log(billingFunction(userCart, 118));
 export {};
 //# sourceMappingURL=e-commerc-cart-engine.js.map
