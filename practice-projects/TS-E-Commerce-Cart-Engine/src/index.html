@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Onyx | Premium Goods</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <header>
+        <div class="brand">ONYX.</div>
+        <nav>
+            <button id="nav-home">All Products</button>
+            <button id="nav-books">The Library</button>
+            <button id="nav-cart">Cart (<span id="cart-count">0</span>)</button>
+        </nav>
+    </header>
+
+    <main id="view-products" class="container">
+        <h2>Curated Collection</h2>
+        <br />
+        <div class="grid" id="all-products-grid"></div>
+    </main>
+
+    <main id="view-books" class="container hidden">
+        <h2>The Library</h2>
+        <br />
+        <div class="grid" id="books-grid"></div>
+    </main>
+
+    <main id="view-checkout" class="container hidden" style="display: flex; gap: 3rem">
+        <div style="flex: 2">
+            <h2>Your Bag</h2>
+            <br />
+            <div id="checkout-items-list"></div>
+        </div>
+
+        <aside style="
+          flex: 1;
+          background: #fff;
+          padding: 2rem;
+          border-radius: 12px;
+          border: 1px solid #e9ecef;
+          height: fit-content;
+        ">
+            <h3>Order Summary</h3>
+            <br />
+
+            <div style="
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+          ">
+                <span>Subtotal</span> <span id="bill-subtotal">$0.00</span>
+            </div>
+
+            <div style="margin-bottom: 1rem">
+                <label style="font-size: 0.85rem; color: #6c757d">Discount Code (%)</label>
+                <input type="number" id="input-discount" style="
+              width: 100%;
+              padding: 0.5rem;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+            " />
+            </div>
+            <div style="margin-bottom: 1rem">
+                <label style="font-size: 0.85rem; color: #6c757d">Custom Tax ($)</label>
+                <input type="number" id="input-tax" style="
+              width: 100%;
+              padding: 0.5rem;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+            " />
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #e9ecef; margin: 1.5rem 0" />
+
+            <div style="
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+          ">
+                <span>Total</span> <span id="bill-total">$0.00</span>
+            </div>
+
+            <button style="
+            width: 100%;
+            background: #111;
+            color: #fff;
+            padding: 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+          ">
+                Checkout Securely
+            </button>
+        </aside>
+    </main>
+
+    <script type="module" src="./dom.js"></script>
+</body>
+
+</html>

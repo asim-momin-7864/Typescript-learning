@@ -1,0 +1,190 @@
+
+:root {
+
+  --bg-color: #f7f9fc; 
+  --surface-color: #ffffff;
+
+
+  --text-main: #2d3748; 
+  --text-muted: #a0aec0;
+
+
+  --primary-color: #2ca4b0; 
+  --primary-hover: #21848e; 
+  --accent-green: rgb(0, 98, 0); 
+  --success-green: #2b8ae3; 
+
+
+  --radius-lg: 24px;
+  --radius-sm: 12px; 
+  --shadow-soft: 0 8px 20px rgba(45, 55, 72, 0.06); 
+  --shadow-hover: 0 15px 35px rgba(45, 55, 72, 0.12);
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:
+    "Inter",
+    -apple-system,
+    sans-serif;
+}
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+}
+
+
+header {
+  background: var(--surface-color);
+  padding: 1.5rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); 
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.brand {
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--text-main);
+}
+nav button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  margin-left: 2rem;
+  transition: color 0.2s;
+}
+nav button:hover {
+  color: var(--primary-color);
+}
+
+
+.container {
+  padding: 3rem 5%;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2.5rem;
+}
+
+
+.card {
+  background: var(--surface-color);
+  border-radius: var(--radius-lg);
+  border: none; /* Removing borders for the clean app look */
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-hover);
+}
+
+.card-img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  background-color: #e2e8f0;
+}
+
+.card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.category-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  /* -webkit-line-clamp: 2; */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-price {
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--accent-green);
+  margin-bottom: 1.5rem;
+}
+
+.btn-add {
+  margin-top: auto;
+  width: 100%;
+  padding: 1rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-add:hover {
+  background: var(--primary-hover);
+  transform: scale(1.02); 
+}
+
+.btn-add.added {
+  background: var(--success-green);
+}
+.btn-add.added:hover {
+  transform: none;
+  filter: brightness(0.95);
+}
+
+.cart-item-row {
+  background: var(--surface-color);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-soft);
+  padding: 1.2rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.billing-sidebar {
+  background: var(--surface-color);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  height: fit-content;
+  box-shadow: var(--shadow-soft);
+}
+
+.hidden {
+  display: none !important;
+}
