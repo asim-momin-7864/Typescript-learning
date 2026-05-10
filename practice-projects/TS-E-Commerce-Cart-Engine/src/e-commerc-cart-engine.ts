@@ -241,7 +241,10 @@ export function cartEngine<T extends Product>(
     inventory: T[],
     userCart: CartStatus<T>,
 ): CartStatus<T> {
+
     switch (action.type) {
+
+
         //Add Item func
         case "ADD_ITEM":
             //find item from inventory
@@ -295,6 +298,7 @@ export function cartEngine<T extends Product>(
                 items: [...userCart.items, addedItem],
             };
 
+
         // Remove Item func
         case "REMOVE_ITEM":
             //* remove operation
@@ -319,6 +323,7 @@ export function cartEngine<T extends Product>(
                 items: updatedCart,
             };
 
+            
         //quantity change
         case "QTY_CHANGE":
             //* if  quantity is 0
